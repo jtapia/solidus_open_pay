@@ -1,0 +1,11 @@
+require 'solidus_core'
+require 'spree_core'
+require 'spree_backend'
+require 'spree_frontend'
+require 'nokogiri'
+require 'typhoeus/adapters/faraday'
+require 'faraday'
+require 'faraday_middleware'
+require 'solidus_openpay/engine'
+require 'spree/conekta/configuration'
+
