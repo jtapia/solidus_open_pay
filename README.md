@@ -4,7 +4,7 @@ Solidus Openpay
 Add solidus_openpay to your Gemfile:
 
 ```ruby
-gem 'solidus_openpay'
+gem 'solidus_openpay', github: 'AngelChaos26/solidus_openpay', branch: 'master'
 ```
 
 Then run:
@@ -16,9 +16,9 @@ bundle exec rails g solidus_openpay:install
 
 ##Setup Openpay Payments
 
-    You need to go to [Openpay](https://www.openpay.mx/), create an account and retrieve your ID, private and public api keys.
+You need to go to [Openpay](https://www.openpay.mx/), create an account and retrieve your ID, private and public api keys.
 
-    On the spree application admin side go to:
+On the spree application admin side go to:
 
 /admin/payment_methods/new
 
@@ -39,7 +39,7 @@ bundle exec rails g solidus_openpay:install
 Create a enviroment variable with your Openpay ID:
 
 ```ruby
-export OPENPAY_ID=yourOpenpayId"
+export OPENPAY_ID=yourOpenpayId
 ```
 
 ###Source Methods
