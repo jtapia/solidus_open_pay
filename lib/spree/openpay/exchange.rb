@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   class Exchange
     
     EXCHANCE_SERVICES = 'https://currency-api.appspot.com/api/'

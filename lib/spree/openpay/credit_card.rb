@@ -1,7 +1,7 @@
 module Spree
-  module Conekta
+  module Openpay
     class CreditCard
-      include Spree::Conekta::Client
+      include Spree::Openpay::Client
 
       attr_reader   :customer
       attr_accessor :id, :brand, :last4, :exp_month, :exp_year, :token, :name, :cvc, :street1, :zip

@@ -1,5 +1,5 @@
 module Spree
-  class BillingIntegration::ConektaGateway::MonthlyPayment < Gateway
+  class BillingIntegration::OpenpayGateway::MonthlyPayment < Gateway
     preference :auth_token, :string
     preference :public_auth_token, :string
     preference :source_method, :string, default: 'card'
@@ -9,7 +9,7 @@ module Spree
     end
 
     def provider_class
-      Spree::Conekta::Provider
+      Spree::Openpay::Provider
     end
 
     def payment_source_class

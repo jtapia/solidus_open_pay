@@ -1,4 +1,4 @@
-module Spree::Conekta::PaymentSource
+module Spree::Openpay::PaymentSource
   module Cash
     def request(common, method, gateway_options)
       common['cash'] = {

@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   class Response < ActiveMerchant::Billing::Response
     attr_accessor :response, :source_method, :status
 

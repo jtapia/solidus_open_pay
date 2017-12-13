@@ -1,7 +1,7 @@
 module Spree
-  module Conekta
+  module Openpay
     class Customer
-      include Spree::Conekta::Client
+      include Spree::Openpay::Client
 
       attr_reader :user, :options, :credit_cards
 
@@ -20,7 +20,7 @@ module Spree
       end
 
       def credit_cards
-        @credit_cards ||= Spree::Conekta::CreditCardCollection.new(self, auth_token: auth_token)
+        @credit_cards ||= Spree::Openpay::CreditCardCollection.new(self, auth_token: auth_token)
       end
 
       def endpoint

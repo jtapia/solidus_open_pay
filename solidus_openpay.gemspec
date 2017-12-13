@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Jonathan Garay', 'Fernando Barajas', 'Manuel Vidaurre', 'AngelChaos26']
   s.email       = %w(jonathan.garay@crowdint.com fernando.barajas@crowdint.com manuel.vidaurre@agiltec.com.mx)
   s.homepage    = 'http://github.com/crowdint/spree_conekta'
-  s.summary     = 'Spree Engine for Conekta Mexican Payment gateway'
-  s.description = 'Spree Engine for Conekta Mexican Payment gateway'
+  s.summary     = 'Solidus Engine for Openpay Mexican Payment gateway'
+  s.description = 'Solidus Engine for Openpay Mexican Payment gateway'
 
   s.files = Dir['{app,config,models,db,lib}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
 

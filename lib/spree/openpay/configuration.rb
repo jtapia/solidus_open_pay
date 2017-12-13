@@ -1,5 +1,5 @@
 module Spree
-  module Conekta
+  module Openpay
     
     class << self
       attr_accessor :configuration

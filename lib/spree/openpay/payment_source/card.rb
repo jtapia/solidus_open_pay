@@ -1,4 +1,4 @@
-module Spree::Conekta::PaymentSource
+module Spree::Openpay::PaymentSource
   module Card
     def request(common, method, gateway_options)
       common['card'] = method.gateway_payment_profile_id

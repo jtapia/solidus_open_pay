@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   class PaymentsController < Spree::StoreController
     helper Spree::OrdersHelper
     skip_before_filter :verify_authenticity_token, only: :create

@@ -7,5 +7,5 @@ require 'typhoeus/adapters/faraday'
 require 'faraday'
 require 'faraday_middleware'
 require 'solidus_openpay/engine'
-require 'spree/conekta/configuration'
+require 'spree/openpay/configuration'
 

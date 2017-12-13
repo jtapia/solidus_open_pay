@@ -1,15 +1,15 @@
-module Spree::Conekta
+module Spree::Openpay
   class Provider
-    include Spree::Conekta::Client
+    include Spree::Openpay::Client
 
     attr_accessor :auth_token, :source_method
 
     attr_reader :options
 
     PAYMENT_SOURCES = {
-        'card' => Spree::Conekta::PaymentSource::Card,
-        'bank' => Spree::Conekta::PaymentSource::Bank,
-        'cash' => Spree::Conekta::PaymentSource::Cash
+        'card' => Spree::Openpay::PaymentSource::Card,
+        'bank' => Spree::Openpay::PaymentSource::Bank,
+        'cash' => Spree::Openpay::PaymentSource::Cash
     }
 
     def initialize(options = {})
@@ -43,21 +43,21 @@ module Spree::Conekta
     end
 
     def credit(credit_cents, response_code, gateway_options)
-      Spree::Conekta::FakeResponse.new
+      Spree::Openpay::FakeResponse.new
     end
 
     private
 
     def commit(common, method_params, gateway_options)
       #We do not use this to add card and monthly_installments
-      if source_method != Spree::Conekta::PaymentSource::Card
+      if source_method != Spree::Openpay::PaymentSource::Card
         source_method.request(common, method_params, gateway_options)
       end
-      Spree::Conekta::Response.new post(common), source_method
+      Spree::Openpay::Response.new post(common), source_method
     end
 
     def build_common(amount, method, gateway_params)
-      if source_method == Spree::Conekta::PaymentSource::Cash && gateway_params[:currency] != 'MXN'
+      if source_method == Spree::Openpay::PaymentSource::Cash && gateway_params[:currency] != 'MXN'
         return build_common_to_cash(amount, gateway_params) 
       else
         # {
@@ -152,7 +152,7 @@ module Spree::Conekta
     end
     
     def build_common_to_cash(amount, gateway_params)
-      amount_exchanged = Spree::Conekta::Exchange.new(amount, gateway_params[:currency]).amount_exchanged
+      amount_exchanged = Spree::Openpay::Exchange.new(amount, gateway_params[:currency]).amount_exchanged
       {
         'amount' => amount_exchanged,
         'reference_id' => gateway_params[:order_id],

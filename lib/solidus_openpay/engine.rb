@@ -13,7 +13,7 @@ module SolidusOpenpay
 
     if Rails.version >= '3.1'
       initializer :assets do |config|
-        Rails.application.config.assets.precompile += %w( spree_conekta.js )
+        Rails.application.config.assets.precompile += %w( solidus_openpay.js )
       end
     end
 
@@ -24,11 +24,11 @@ module SolidusOpenpay
     end
 
     initializer "spree.gateway.payment_methods", after: "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Spree::BillingIntegration::ConektaGateway
-      app.config.spree.payment_methods << Spree::BillingIntegration::ConektaGateway::Cash
-      app.config.spree.payment_methods << Spree::BillingIntegration::ConektaGateway::Card
-      app.config.spree.payment_methods << Spree::BillingIntegration::ConektaGateway::Bank
-      app.config.spree.payment_methods << Spree::BillingIntegration::ConektaGateway::MonthlyPayment
+      app.config.spree.payment_methods << Spree::BillingIntegration::OpenpayGateway
+      app.config.spree.payment_methods << Spree::BillingIntegration::OpenpayGateway::Cash
+      app.config.spree.payment_methods << Spree::BillingIntegration::OpenpayGateway::Card
+      app.config.spree.payment_methods << Spree::BillingIntegration::OpenpayGateway::Bank
+      app.config.spree.payment_methods << Spree::BillingIntegration::OpenpayGateway::MonthlyPayment
     end
 
     initializer 'solidus_openpay.assets.precompile' do |app|

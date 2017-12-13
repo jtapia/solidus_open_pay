@@ -1,12 +1,12 @@
 module Spree
   Order.class_eval do
     #HACK
-    Spree::Conekta
-    Spree::Conekta::Response
-    Spree::Conekta::PaymentSource
-    Spree::Conekta::PaymentSource::Card
-    Spree::Conekta::PaymentSource::Bank
-    Spree::Conekta::PaymentSource::Cash
+    Spree::Openpay
+    Spree::Openpay::Response
+    Spree::Openpay::PaymentSource
+    Spree::Openpay::PaymentSource::Card
+    Spree::Openpay::PaymentSource::Bank
+    Spree::Openpay::PaymentSource::Cash
 
     def last_payment_details
       YAML.load payments.last.log_entries.last.details

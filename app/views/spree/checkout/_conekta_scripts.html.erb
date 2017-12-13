@@ -10,7 +10,7 @@
             });
 
             var gatewayOptions = JSON.parse('<%= escape_javascript Rabl.render(@order,
-                                                     'spree/conekta/gateway_options',
+                                                     'spree/openpay/gateway_options',
                                                      view_path: File.expand_path('app/views', SolidusOpenpay::Engine.root),
                                                      format: :json).html_safe %>');
 

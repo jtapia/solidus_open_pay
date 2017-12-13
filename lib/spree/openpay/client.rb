@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   module Client
     #CONEKTA_API = 'https://api.conekta.io/'
     CONEKTA_API = "https://sandbox-api.openpay.mx/v1/#{ENV['OPENPAY_ID']}/"

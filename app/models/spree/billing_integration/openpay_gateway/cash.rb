@@ -1,5 +1,5 @@
 module Spree
-  class BillingIntegration::ConektaGateway::Cash < Gateway
+  class BillingIntegration::OpenpayGateway::Cash < Gateway
     preference :auth_token, :string
     preference :source_method, :string, default: 'cash'
 
@@ -8,11 +8,11 @@ module Spree
     end
 
     def provider_class
-      Spree::Conekta::Provider
+      Spree::Openpay::Provider
     end
 
     def payment_source_class
-      Spree::ConektaPayment
+      Spree::OpenpayPayment
     end
 
     def method_type

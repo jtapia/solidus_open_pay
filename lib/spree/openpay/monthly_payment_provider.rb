@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   class MonthlyPaymentProvider
     attr_accessor :auth_token
 

@@ -1,7 +1,7 @@
 require 'celluloid'
 
 module Spree
-  module Conekta
+  module Openpay
     class PaymentNotificationHandler
       include Celluloid
 

@@ -1,5 +1,5 @@
 module Spree
-   class BillingIntegration::ConektaGateway < Gateway
+   class BillingIntegration::OpenpayGateway < Gateway
      preference :auth_token, :string
      preference :source_method, :string, default: ['card, cash, bank']
 
@@ -8,16 +8,16 @@ module Spree
      end
 
      def provider_class
-       warn "DEPRECATION WARNING: Spree::BillingIntegration::Conekta will be deprecated, please use BillingIntegration::ConektaGateway::#{preferred_source_method.titleize} instead"
-       Spree::Conekta::Provider
+       warn "DEPRECATION WARNING: Spree::BillingIntegration::Openpay will be deprecated, please use BillingIntegration::OpenpayGateway::#{preferred_source_method.titleize} instead"
+       Spree::Openpay::Provider
      end
 
      def payment_source_class
-       card? ? CreditCard : Spree::ConektaPayment
+       card? ? CreditCard : Spree::OpenpayPayment
      end
 
      def method_type
-       card? ? 'gateway' : 'conekta'
+       card? ? 'gateway' : 'openpay'
      end
 
      def card?

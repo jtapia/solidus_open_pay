@@ -1,4 +1,4 @@
-module Spree::Conekta
+module Spree::Openpay
   class FakeResponse < ActiveMerchant::Billing::Response
 
     def initialize

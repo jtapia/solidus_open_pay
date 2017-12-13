@@ -1,8 +1,8 @@
 module Spree
-  module Conekta
+  module Openpay
     class CreditCardCollection
       include Enumerable
-      include Spree::Conekta::Client
+      include Spree::Openpay::Client
 
       extend  Forwardable
 
@@ -17,7 +17,7 @@ module Spree
       end
 
       def add(token) 
-          card = Spree::Conekta::CreditCard.create(customer, token, auth_token)
+          card = Spree::Openpay::CreditCard.create(customer, token, auth_token)
           @cards << card
           card
       end
@@ -30,7 +30,7 @@ module Spree
 
       def build_cards(response)
         response.map do |credit_card|
-          Spree::Conekta::CreditCard.build(customer, credit_card, auth_token: auth_token)
+          Spree::Openpay::CreditCard.build(customer, credit_card, auth_token: auth_token)
         end
       end
     end

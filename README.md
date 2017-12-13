@@ -24,13 +24,13 @@ On the spree application admin side go to:
 
     In the provider box,choose one of the following options depending on your needs:
 
-     Spree::BillingIntegration::ConektaGateway::Card
+     Spree::BillingIntegration::OpenpayGateway::Card
 
-     Spree::BillingIntegration::ConektaGateway::Cash
+     Spree::BillingIntegration::OpenpayGateway::Cash
 
-     Spree::BillingIntegration::ConektaGateway::Bank
+     Spree::BillingIntegration::OpenpayGateway::Bank
 
-     Spree::BillingIntegration::ConektaGateway::MonthlyPayment
+     Spree::BillingIntegration::OpenpayGateway::MonthlyPayment
 
     On the auth token field, add your Openpay private key.
 
