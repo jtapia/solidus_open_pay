@@ -2,7 +2,7 @@ module Spree::Openpay
   class Provider
     include Spree::Openpay::Client
 
-    attr_accessor :auth_token, :source_method
+    attr_accessor :auth_token, :source_method, :customer_id, :end_point
 
     attr_reader :options
 
@@ -16,12 +16,31 @@ module Spree::Openpay
       @options       = options
       @auth_token    = options[:auth_token]
       @source_method = payment_processor(options[:source_method])
+      @customer_id = nil
+      @end_point = ""
     end
 
     def authorize(amount, method_params, gateway_options = {})
       #We added the method_params for the source_id in Openpay
       common = build_common(amount, method_params, gateway_options)
-      commit common, method_params, gateway_options
+      common_card = build_common_card(method_params, gateway_options)
+      
+      #Customer Openpay ID
+      @customer_id = get_customer_id(gateway_options)
+      
+      #If customer ID is not defined, we create only the charge
+      if @customer_id.nil?
+        #Openpay charge with token
+        @end_point = "charges"
+        commit common, method_params, gateway_options
+      else
+        #Openpay card by token
+        @end_point = "customers/#{customer_id}/cards"
+        commit common_card, method_params, gateway_options
+        #Openpay charge after creating card
+        @end_point = "customers/#{customer_id}/charges"
+        commit common, method_params, gateway_options
+      end
     end
 
     alias_method :purchase, :authorize
@@ -31,7 +50,7 @@ module Spree::Openpay
     end
 
     def endpoint
-      'charges'
+      return @end_point
     end
 
     def payment_processor(source_name)
@@ -70,18 +89,29 @@ module Spree::Openpay
         
         order = Spree::Order.find_by_number(gateway_params[:order_id].split('-').first)
         device_session_id = (order.device_session_id.nil? ? "" : order.device_session_id) 
+        amount_money = order.total.to_f
         
         {
           "source_id" => method.gateway_payment_profile_id,
           "method" => "card",
-          "amount" => amount,
+          "amount" => amount_money,
           "currency" => gateway_params[:currency],
           "description" => gateway_params[:order_id],
           "order_id" => gateway_params[:order_id],
-          "device_session_id" => device_session_id,
-          "customer" => customer(gateway_params)
+          "device_session_id" => device_session_id
+          #"customer" => customer(gateway_params)
         }
       end
+    end
+  
+    def build_common_card(method, gateway_params)
+      order = Spree::Order.find_by_number(gateway_params[:order_id].split('-').first)
+      device_session_id = (order.device_session_id.nil? ? "" : order.device_session_id) 
+        
+      {
+        "token_id" => method.gateway_payment_profile_id,
+        "device_session_id" => device_session_id
+      }
     end
   
     def customer(gateway_params)
@@ -160,6 +190,12 @@ module Spree::Openpay
         'description' => gateway_params[:order_id],
         'details' => details(gateway_params)
       }
+    end
+    
+    def get_customer_id(gateway_params)
+      order = Spree::Order.find_by_number(gateway_params[:order_id].split('-').first)
+      
+      return order.user.openpay_id
     end
   end
 end

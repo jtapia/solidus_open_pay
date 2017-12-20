@@ -7,7 +7,7 @@ module Spree
     Spree::Openpay::PaymentSource::Card
     Spree::Openpay::PaymentSource::Bank
     Spree::Openpay::PaymentSource::Cash
-
+    
     def last_payment_details
       YAML.load payments.last.log_entries.last.details
     end
