@@ -1,11 +1,11 @@
 Spree::OrdersController.class_eval do
-    before_action :create_client_openpay, only: :update
+    before_action :create_openpay_client, only: :update
     
     CONEKTA_API = "https://sandbox-api.openpay.mx/v1/#{ENV['OPENPAY_ID']}/"
     
     attr_accessor :auth_token
     
-    def create_client_openpay
+    def create_openpay_client
         order_user = @order.user
         
         #We create the client via faraday in openpay if the openpay id is not defined
