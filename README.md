@@ -18,7 +18,7 @@ bundle exec rails g solidus_openpay:install
 
 You need to go to [Openpay](https://www.openpay.mx/), create an account and retrieve your ID, private and public api keys.
 
-On the spree application admin side go to:
+On the solidus application admin side go to:
 
 /admin/payment_methods/new
 
