@@ -1,4 +1,6 @@
-module Spree::Openpay
+# frozen_string_literal: true
+
+module SolidusOpenpay
   class FakeResponse < ActiveMerchant::Billing::Response
 
     def initialize

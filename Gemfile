@@ -1,28 +1,32 @@
-source "http://rubygems.org"
+# frozen_string_literal: true
 
-gem 'solidus', github: 'solidusio/solidus'
-# Provides basic authentication functionality for testing parts of your engine
-gem 'solidus_auth_devise', '~> 1.0'
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-#gem 'spree_i18n', github: 'spree/spree_i18n', branch: 'master'
-gem 'solidus_i18n', github: 'solidusio-contrib/solidus_i18n', branch: 'master'
-gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 'master'
+branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
 
-gem 'globalize', github: 'globalize/globalize', branch: 'master'
+git 'https://github.com/solidusio/solidus.git', branch: branch do
+  gem 'solidus_api'
+  gem 'solidus_backend'
+  gem 'solidus_core'
+  gem 'solidus_frontend'
+  gem 'solidus_sample'
+end
+
+gem 'rails', ENV.fetch('RAILS_VERSION', nil)
+
+case ENV['DB']
+when 'mysql'
+  gem 'mysql2'
+when 'postgresql'
+  gem 'pg'
+else
+  gem 'sqlite3'
+end
+
+gem 'rails-controller-testing', group: :test
 
 group :test, :development do
-  gem 'rspec-rails', '~> 3.1.0'
-  gem 'sqlite3'
-  gem 'factory_girl'
-  gem 'pry'
-  gem 'database_cleaner'
-  gem 'spork'
-  gem 'poltergeist'
-  gem 'selenium-webdriver'
-  gem 'capybara-webkit'
-  gem 'capybara'
-  gem 'vcr'
-  
   gem 'faraday'
   gem 'faraday_middleware'
   gem 'activemerchant'
@@ -31,9 +35,8 @@ group :test, :development do
   gem 'celluloid'
 end
 
-group :test do
-  gem 'ffaker'
-end
-
-
 gemspec
+
+# Use a local Gemfile to include development dependencies that might not be
+# relevant for the project or for other contributors, e.g.: `gem 'pry-debug'`.
+eval_gemfile 'Gemfile-local' if File.exist? 'Gemfile-local'

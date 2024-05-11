@@ -1,4 +1,6 @@
-module Spree::Openpay
+# frozen_string_literal: true
+
+module SolidusOpenpay
   class Response < ActiveMerchant::Billing::Response
     attr_accessor :response, :source_method, :status
 

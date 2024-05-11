@@ -1,4 +1,6 @@
-module Spree::Openpay
+# frozen_string_literal: true
+
+module SolidusOpenpay
   module Client
     attr_accessor :auth_token
     

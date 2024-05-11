@@ -5,9 +5,11 @@
     </div>
     <h2 class='payment-title'><%= t('conekta.title') %></h2>
   </header>
+
   <div class='order-body'>
     <%= render partial: @order.last_payment_source %>
   </div>
+
   <footer class='order-footer'>
     <%= button_tag t('conekta.print_payment_form'), id: 'print-payment', class: 'icon-print'  %>
   </footer>

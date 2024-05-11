@@ -1,3 +1,5 @@
+# frozen_string_literal: true# frozen_string_literal: true
+
 class RenameTypeColumnToOpenpayPayment < ActiveRecord::Migration
   def change
     rename_column :spree_openpay_payments, :type, :payment_type

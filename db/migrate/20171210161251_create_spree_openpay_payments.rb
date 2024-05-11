@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSpreeOpenpayPayments < ActiveRecord::Migration
   def change
     create_table :spree_openpay_payments do |t|

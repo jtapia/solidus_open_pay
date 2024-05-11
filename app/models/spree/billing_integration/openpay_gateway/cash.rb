@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class BillingIntegration::OpenpayGateway::Cash < Gateway
     preference :auth_token, :string

@@ -1,10 +1,15 @@
+# frozen_string_literal: true
+
+require 'solidus_core'
+require 'solidus_support'
+
 module SolidusOpenpay
   class Engine < Rails::Engine
-    require 'spree'
+    include SolidusSupport::EngineExtensions
 
-    engine_name 'spree_gateway'
+    isolate_namespace ::Spree
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    engine_name 'solidus_openpay'
 
     # use rspec for tests
     config.generators do |g|
