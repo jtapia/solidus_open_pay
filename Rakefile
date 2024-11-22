@@ -25,6 +25,6 @@ end
 
 desc 'Generates a dummy app for testing'
 task :test_app do
-  ENV['LIB_NAME'] = 'solidus_openpay'
+  ENV['LIB_NAME'] = 'solidus_open_pay'
   Rake::Task['extension:test_app'].invoke
 end

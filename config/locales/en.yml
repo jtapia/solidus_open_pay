@@ -1,4 +1,43 @@
 en:
+  solidus_open_pay:
+    admin:
+      card:
+        brand: Brand
+        card_number: Card Number
+        device_session_id: Device Session ID
+        token_id: Token ID
+    form:
+      placeholder:
+        card_code: 123
+        card_name: John Doe
+        card_number: XXXX XXXX XXXX XXXX
+    gateway_rejection_reasons:
+      1000: Internal server error, contact suppor
+      1001: Bad Request
+      1002: The api key or merchant id are invalid
+      1003: Parameters look valid but request failed
+      1004: The resource is unavailable at this moment. Please try again later
+      1005: The requested resource doesn't exist
+      1006: The order_id has already been processed
+      1007: Operation rejected by processor
+      1008: The account is inactive
+      2004: The card number verification digit is invalid
+      2005: The expiration date has expired
+      2006: The CVV2 security code is required
+      2007: The card number is only valid in sandbox
+      2009: The CVV2 security code is invalid
+      2010: 3D Secure authentication failed
+      2011: Card product type not supported
+      3001: The card was declined by the bank
+      3002: The card has expired
+      3003: The card doesn't have sufficient funds
+      3004: The card was reported as stolen
+      3005: Fraud risk detected by anti-fraud system --- Found in blacklist
+      3006: Request not allowed
+      3009: The card was reported as lost
+      3010: The bank has restricted the card
+      3011: The bank has requested the card to be retained
+      3012: Bank authorization is required for this charge
   conekta:
     additional_steps_warning: Additional steps to complete your payment
     card:
@@ -20,3 +59,7 @@ en:
     order_number: 'Order Number: %{number}'
     total: 'Total:'
     installments_number: 'Installments Number'
+  activerecord:
+    models:
+      solidus_open_pay/payment_source: Solidus OpenPay Payment Source
+      solidus_open_pay/payment_method: OpenPay Credit Card

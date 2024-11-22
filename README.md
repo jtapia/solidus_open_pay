@@ -1,17 +1,17 @@
 Solidus Openpay
 ==============
 
-Add solidus_openpay to your Gemfile:
+Add solidus_open_pay to your Gemfile:
 
 ```ruby
-gem 'solidus_openpay', github: 'elliotmx/solidus_openpay', branch: 'master'
+gem 'solidus_open_pay', github: 'jtapia/solidus_open_pay'
 ```
 
 Then run:
 
 ```shell
 bundle
-bundle exec rails g solidus_openpay:install
+bundle exec rails g solidus_open_pay:install
 ```
 
 ##Setup Openpay Payments
@@ -24,13 +24,7 @@ On the solidus application admin side go to:
 
     In the provider box,choose one of the following options depending on your needs (freemium version only works with credit card):
 
-     Spree::BillingIntegration::OpenpayGateway::Card
-
-     Spree::BillingIntegration::OpenpayGateway::Cash
-
-     Spree::BillingIntegration::OpenpayGateway::Bank
-
-     Spree::BillingIntegration::OpenpayGateway::MonthlyPayment
+     SolidusOpenPay::PaymentMethod
 
     On the auth token field, add your Openpay private key.
 
@@ -50,29 +44,3 @@ Solidus Openpay currently supports:
 **Important Note:** This extension only works with ruby 2.0+.
 
 **Important Note:** Openpay only supports Credit Cards Payments.
-
-# About the Author
-
-[ELLIOT](http://elliot.mx/)
-
-## Contributors
-  * Jonathan Garay
-  * Fernando Cuauhtemoc Barajas Chavez
-  * Herman Moreno
-  * Edwin Cruz
-  * Carlos A. Muñiz Moreno
-  * Chalo Fernandez
-  * Guillermo Siliceo
-  * Jaime Victoria
-  * Jorge Pardiñas
-  * Juan Carlos Rojas
-  * Leo Fischer
-  * Manuel Vidaurre
-  * Marco Medina
-  * Mumo Carlos
-  * Sergio Morales
-  * Steven Barragan
-  * Ulices Barajas
-  * bishma-stornelli
-  * Raul Contreras Arredondo
-  * AngelChaos26
