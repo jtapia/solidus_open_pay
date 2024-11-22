@@ -5,8 +5,8 @@ require_relative 'lib/solidus_open_pay/version'
 Gem::Specification.new do |s|
   s.name = 'solidus_open_pay'
   s.version = SolidusOpenPay::VERSION
-  s.authors = %w('Jonathan Tapia')
-  s.email = %w(jtapia.dev@gmail.com )
+  s.authors = %w(Jonathan Tapia)
+  s.email = %w(jtapia.dev@gmail.com)
 
   s.summary = 'Solidus Engine for Openpay Mexican Payment Gateway'
   s.homepage = 'http://github.com/jtapia/solidus_open_pay'
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.metadata['source_code_uri'] = 'https://github.com/jtapia/solidus_open_pay'
   s.metadata['changelog_uri'] = 'https://github.com/jtapia/solidus_open_pay/blob/master/CHANGELOG.md'
 
-  s.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
+  s.required_ruby_version = Gem::Requirement.new('>= 3.0')
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -24,9 +24,9 @@ Gem::Specification.new do |s|
 
   s.files = files.grep_v(%r{^(test|spec|features)/})
   s.test_files = files.grep(%r{^(test|spec|features)/})
-  s.bindir = 'exe'
+  s.bindir = "exe"
   s.executables = files.grep(%r{^exe/}) { |f| File.basename(f) }
-  s.require_paths = ['lib']
+  s.require_paths = ["lib"]
 
   s.add_dependency 'deface', '~> 1.5'
   s.add_dependency 'solidus_core', '>= 3.0', '< 5.0'
@@ -34,5 +34,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'openpay'
 
+  s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'solidus_dev_support', '~> 2.5'
 end

@@ -1,25 +1,24 @@
-# Relaxed.Ruby.Style
+require:
+  - solidus_dev_support/rubocop
 
 AllCops:
+  NewCops: disable
+  TargetRubyVersion: '3.0'
   Exclude:
-    - 'spec/dummy/**/*'
-    - 'vendor/bundle/**/*'
-  TargetRubyVersion: 2.1
-
-# Sometimes I believe this reads better
-# This also causes spacing issues on multi-line fixes
-Style/BracesAroundHashParameters:
-  Enabled: false
+    - sandbox/**/*
+    - dummy-app/**/*
+    - spec/dummy/**/*
+    - vendor/bundle/**/*
 
 # We use class vars and will have to continue doing so for compatability
 Style/ClassVars:
   Enabled: false
 
 # We need these names for backwards compatability
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # This has been used for customization
@@ -38,13 +37,10 @@ Style/WordArray:
 Style/ConditionalAssignment:
   Enabled: false
 
-Performance/Count:
-  Enabled: false
-
 Style/RaiseArgs:
   Enabled: false
 
-Style/OpMethod:
+Naming/BinaryOperatorParameterName:
   Enabled: false
 
 # We can use good judgement here
@@ -55,34 +51,20 @@ Style/RegexpLiteral:
 Style/AsciiComments:
   Enabled: false
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: false
 
-Style/ElseAlignment:
+Layout/ElseAlignment:
   Enabled: false
 
 Style/IndentationWidth:
   Enabled: false
 
-Style/AlignParameters:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
-Style/ClosingParenthesisIndentation:
+Layout/MultilineMethodCallIndentation:
   Enabled: false
-
-Style/MultilineMethodCallIndentation:
-  Enabled: false
-
-Style/IndentArray:
-  Enabled: false
-
-Style/IndentHash:
-  Enabled: false
-
-Style/AlignHash:
-  Enabled: false
-
-# From http://relaxed.ruby.style/
 
 Style/Alias:
   Enabled: false
@@ -100,7 +82,7 @@ Style/Documentation:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styledocumentation
 
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styledotposition
 
@@ -168,11 +150,11 @@ Style/SingleLineMethods:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
 
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
 
-Style/SpaceInsideParens:
+Layout/SpaceInsideParens:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
 
@@ -199,7 +181,7 @@ Lint/AssignmentInCondition:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'Rakefile'
 
@@ -218,7 +200,7 @@ Metrics/ModuleLength:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -228,4 +210,28 @@ Metrics/ParameterLists:
   Enabled: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+Lint/ScriptPermission:
+  Enabled: false
+
+Lint/NonDeterministicRequireOrder:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false
+
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: false
+
+Layout/ArgumentAlignment:
   Enabled: false

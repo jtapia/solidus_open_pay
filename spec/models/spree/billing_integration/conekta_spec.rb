@@ -1,11 +1,13 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-RSpec.describe Spree::BillingIntegration::Conekta, type: :model do
-  context 'When Spree::Config[:auto_capture] is set to true' do
-    before do
-      Spree::Config[:auto_capture] = true
-    end
+# require 'spec_helper'
 
-    specify { expect(subject.auto_capture?).to eq(false) }
-  end
-end
+# RSpec.describe Spree::BillingIntegration::Conekta, type: :model do
+#   context 'When Spree::Config[:auto_capture] is set to true' do
+#     before do
+#       Spree::Config[:auto_capture] = true
+#     end
+
+#     specify { expect(subject.auto_capture?).to eq(false) }
+#   end
+# end

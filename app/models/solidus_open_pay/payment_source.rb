@@ -19,7 +19,7 @@ module SolidusOpenPay
     end
 
     def can_credit?(payment)
-      payment.completed? && payment.credit_allowed > 0
+      payment.completed? && payment.credit_allowed.positive?
     end
   end
 end

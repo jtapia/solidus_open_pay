@@ -15,11 +15,11 @@ module SolidusOpenPay
       @options = options
     end
 
-    def authorize(amount, source, options = {})
+    def authorize(amount_in_cents, source, options = {})
       resource_builder = ::SolidusOpenPay::Builders::Charge.new(
-        source:,
-        amount:,
-        options:
+        source: source,
+        amount: amount_in_cents,
+        options: options
       )
 
       response = client.create(:charges).create(
@@ -37,7 +37,7 @@ module SolidusOpenPay
       SolidusOpenPay::Response.build(e)
     end
 
-    def capture(amount_in_cents, authorization_id, options = {})
+    def capture(_amount_in_cents, authorization_id, _options = {})
       response = client.create(:charges).capture(
         authorization_id
       )
@@ -51,7 +51,7 @@ module SolidusOpenPay
       SolidusOpenPay::Response.build(e)
     end
 
-    def purchase(amount_in_cents, source, options = {})
+    def purchase(_amount_in_cents, _source, _options = {})
     rescue ::OpenpayTransactionException,
            ::OpenpayException,
            ::OpenpayConnectionException => e

@@ -1,44 +1,46 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-RSpec.describe Spree::Conekta::Client, type: :model do
-  subject { double('client').extend Spree::Conekta::Client }
+# require 'spec_helper'
 
-  describe :headers do
-    let(:token){ 'abc12345678' }
-    let(:auth_token){ Base64.encode64(token)}
+# RSpec.describe Spree::Conekta::Client, type: :model do
+#   subject { double('client').extend Spree::Conekta::Client }
 
-    before { allow(subject).to receive(:auth_token).and_return token }
+#   describe :headers do
+#     let(:token){ 'abc12345678' }
+#     let(:auth_token){ Base64.encode64(token)}
 
-    it "should return headers with auth token" do
-      expect(subject.headers).to include 'Accept', 'Content-type'
-    end
-  end
+#     before { allow(subject).to receive(:auth_token).and_return token }
 
-  describe :post do
-    let(:json) do
-      {
-        header: 'value',
-        test: 'value2'
-      }.to_json
-    end
+#     it "should return headers with auth token" do
+#       expect(subject.headers).to include 'Accept', 'Content-type'
+#     end
+#   end
 
-    before do
-      subject.stub_chain(:connection, :post, :body).and_return(json)
-      allow(subject).to receive_messages(endpoint: 'charges')
-    end
+#   describe :post do
+#     let(:json) do
+#       {
+#         header: 'value',
+#         test: 'value2'
+#       }.to_json
+#     end
 
-    it 'should return parsed body' do
-      expect(subject.post({})).to be_a(Hash)
-    end
-  end
+#     before do
+#       subject.stub_chain(:connection, :post, :body).and_return(json)
+#       allow(subject).to receive_messages(endpoint: 'charges')
+#     end
 
-  describe :connection do
-    it "should return a faraday connection" do
-      expect(subject.connection).to be_a(Faraday::Connection)
-    end
+#     it 'should return parsed body' do
+#       expect(subject.post({})).to be_a(Hash)
+#     end
+#   end
 
-    it "should include headers" do
-      expect(subject.connection.headers).to include(subject.headers)
-    end
-  end
-end
+#   describe :connection do
+#     it "should return a faraday connection" do
+#       expect(subject.connection).to be_a(Faraday::Connection)
+#     end
+
+#     it "should include headers" do
+#       expect(subject.connection.headers).to include(subject.headers)
+#     end
+#   end
+# end

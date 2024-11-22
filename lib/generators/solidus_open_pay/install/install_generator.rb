@@ -17,7 +17,7 @@ module SolidusOpenPay
         @components = {
           backend: options[:backend],
           starter_frontend: options[:frontend] == 'starter',
-          classic_frontend: options[:frontend] == 'classic',
+          classic_frontend: options[:frontend] == 'classic'
         }
       end
 
@@ -38,7 +38,7 @@ module SolidusOpenPay
             'vendor/assets/stylesheets/spree/backend/all.css',
             " *= require spree/backend/solidus_open_pay\n",
             before: %r{\*/},
-            verbose: true,
+            verbose: true
           )
         end
       end
@@ -54,7 +54,7 @@ module SolidusOpenPay
             'app/assets/stylesheets/solidus_starter_frontend.css',
             " *= require spree/frontend/solidus_open_pay\n",
             before: %r{\*/},
-            verbose: true,
+            verbose: true
           )
 
           spec_paths =
@@ -108,32 +108,6 @@ module SolidusOpenPay
       def engine
         SolidusOpenPay::Engine
       end
-      # class_option :auto_run_migrations, type: :boolean, default: false
-
-      # def add_javascripts
-      #   append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/solidus_open_pay\n"
-      #   append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/solidus_open_pay\n"
-      # end
-
-      # def add_stylesheets
-      #   inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require spree/frontend/solidus_open_pay\n", before: /\*\//, verbose: true
-      #   inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/solidus_open_pay\n", before: /\*\//, verbose: true
-      # end
-
-      # def add_migrations
-      #   run 'bundle exec rake railties:install:migrations FROM=solidus_open_pay'
-      # end
-
-      # def run_migrations
-      #   run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(
-      #     ask('Would you like to run the migrations now? [Y/n]')
-      #   )
-      #   if run_migrations
-      #     run 'bundle exec rake db:migrate'
-      #   else
-      #     puts 'Skipping rake db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
-      #   end
-      # end
     end
   end
 end

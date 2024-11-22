@@ -1,29 +1,31 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe Spree::Conekta::PaymentNotificationHandler do
-  let(:payment) { double(Spree::Payment) }
+# require 'spec_helper'
 
-  let(:notification) do
-    {
-      'type' => 'charge.paid',
-      'data' => {
-        'object' => {
-          'reference_id' => 'foobar'
-        }
-      }
-    }
-  end
+# describe Spree::Conekta::PaymentNotificationHandler do
+#   let(:payment) { double(Spree::Payment) }
 
-  describe '#perform_action' do
+#   let(:notification) do
+#     {
+#       'type' => 'charge.paid',
+#       'data' => {
+#         'object' => {
+#           'reference_id' => 'foobar'
+#         }
+#       }
+#     }
+#   end
 
-    subject { described_class.new(notification, 1) }
+#   describe '#perform_action' do
 
-    it 'runs the given action after a given time' do
-      Spree::Payment.should_receive(:find_by_order_number).with('foobar').and_return payment
-      payment.should_receive :capture!
+#     subject { described_class.new(notification, 1) }
 
-      subject.perform_action
-      sleep 2
-    end
-  end
-end
+#     it 'runs the given action after a given time' do
+#       Spree::Payment.should_receive(:find_by_order_number).with('foobar').and_return payment
+#       payment.should_receive :capture!
+
+#       subject.perform_action
+#       sleep 2
+#     end
+#   end
+# end

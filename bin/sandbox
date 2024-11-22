@@ -1,24 +1,61 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 
-# set -e
+set -e
 
-# extension_name="solidus_open_pay"
-# app_name="sandbox"
+case "$DB" in
+postgres|postgresql)
+  RAILSDB="postgresql"
+  ;;
+mysql)
+  RAILSDB="mysql"
+  ;;
+sqlite|'')
+  RAILSDB="sqlite3"
+  ;;
+*)
+  echo "Invalid DB specified: $DB"
+  exit 1
+  ;;
+esac
 
-# bin/rails-new "$app_name"
+if [ ! -z $SOLIDUS_BRANCH ]
+then
+  BRANCH=$SOLIDUS_BRANCH
+else
+  BRANCH="main"
+fi
 
-# # Stay away from the bundler env of the containing extension.
-# function unbundled {
-#   echo "~~> Running: $@"
-#   ruby -rbundler -e'Bundler.with_unbundled_env {system *ARGV}' -- env BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true "$@"
-# }
+extension_name="solidus_open_pay"
 
-# cd "./$app_name"
-# unbundled bundle add $extension_name --path ..
-# unbundled bundle exec rails generate $extension_name:install --migrate --specs=all
+# Stay away from the bundler env of the containing extension.
+function unbundled {
+  ruby -rbundler -e'b = proc {system *ARGV}; Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&b) : Bundler.with_clean_env(&b)' -- "$@"
+}
 
-# # if [[ -n "$SOLIDUS_STRIPE_API_KEY" ]]; then
-# #   echo "~~> Creating the stripe payment method using env credentials..."
-# #   unbundled bundle exec rails runner \
-# #     'p SolidusStripe::PaymentMethod.create!(name: "SolidusOpenPay", preference_source: "solidus_stripe_env_credentials", position: -1)'
-# # fi
+rm -rf ./sandbox
+rails new sandbox \
+  --database="$RAILSDB" \
+  --skip-git \
+  --skip-keeps \
+  --skip-rc \
+  --skip-bootsnap \
+  --skip-test
+
+if [ ! -d "sandbox" ]; then
+  echo 'sandbox rails application failed'
+  exit 1
+fi
+
+cd ./sandbox
+unbundled bundle add solidus --github solidusio/solidus --branch "${BRANCH:-main}" --version '> 0.a'
+unbundled bundle exec rake db:drop db:create
+unbundled bundle exec rails generate solidus:install --payment-method=none --auto-accept "$@"
+unbundled bundle add ${extension_name} --path '../'
+unbundled bundle exec rails generate ${extension_name}:install --frontend=starter --migrate=true
+
+echo
+echo "🚀 Sandbox app successfully created for ${extension_name}!"
+echo "🚀 Using $RAILSDB and Solidus $BRANCH"
+echo "🚀 Use 'export DB=[postgres|mysql|sqlite]' to control the DB adapter"
+echo "🚀 Use 'export SOLIDUS_BRANCH=<BRANCH-NAME>' to control the Solidus version"
+echo "🚀 This app is intended for test purposes."

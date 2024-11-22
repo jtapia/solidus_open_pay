@@ -46,7 +46,7 @@ module SolidusOpenPay
         error_message = transaction_error_message(result['error_code'])
 
         [
-          "#{error_message}",
+          error_message.to_s,
           "(#{result['error_code']})"
         ].join(' ')
       end

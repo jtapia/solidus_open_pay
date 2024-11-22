@@ -22,10 +22,10 @@ module SolidusOpenPay
           'order_id' => order_id,
           'device_session_id' => device_session_id,
           'customer' => {
-              'name' => first_name,
-              'last_name' => last_name,
-              'phone_number' => phone_number,
-              'email' => email
+            'name' => first_name,
+            'last_name' => last_name,
+            'phone_number' => phone_number,
+            'email' => email
           }
         }
       end
@@ -45,7 +45,7 @@ module SolidusOpenPay
       end
 
       def order
-        @order ||= Spree::Order.find_by(number: order_id.split('-')[0])
+        @order ||= Spree::Order.find_by(number: order_id.split[0])
       end
 
       def phone_number
@@ -57,11 +57,11 @@ module SolidusOpenPay
       end
 
       def first_name
-        @first_name ||= source.name.split(' ')[0]
+        @first_name ||= source.name.split[0]
       end
 
       def last_name
-        @last_name ||= source.name.split(' ')[1]
+        @last_name ||= source.name.split[1]
       end
     end
   end

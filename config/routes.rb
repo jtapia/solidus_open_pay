@@ -2,6 +2,6 @@
 
 Spree::Core::Engine.routes.draw do
   namespace :open_pay do
-    resources :payments, only: [:create, :show]
+    resources :payments, only: %i[create show]
   end
 end
