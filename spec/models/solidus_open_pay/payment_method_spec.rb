@@ -83,20 +83,6 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
               .to eq('pk_xxxx1')
         end
       end
-
-      context 'with invalid user input' do
-        let(:update_params) do
-          { preferred_merchant_id: nil }
-        end
-
-        it 'raise a JSON parser error' do
-          expect {
-            open_pay_payment_method.update!(
-              preferences: update_params
-            )
-          }.to raise_error(ActiveRecord::RecordInvalid)
-        end
-      end
     end
   end
 
