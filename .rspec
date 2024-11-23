@@ -1,2 +1,2 @@
 --color
---require solidus_open_pay_spec_helper
+--require spec_helper
