@@ -50,16 +50,18 @@
   <%= text_field_tag "#{param_prefix}[expiration_month]",
                      '',
                      id: 'card-expiry-month',
-                     class: 'required',
+                     class: 'required text-center',
                      placeholder: 'MM',
+                     maxlength: 2,
                      type: 'tel',
                      data: { 'openpay-card': 'expiration_month' } %>
   <span> / </span>
   <%= text_field_tag "#{param_prefix}[expiration_year]",
                      '',
                      id: 'card-expiry-year',
-                     class: 'required',
+                     class: 'required text-center',
                      placeholder: 'YY',
+                     maxlength: 2,
                      type: 'tel',
                      data: { 'openpay-card': 'expiration_year' } %>
 </div>
