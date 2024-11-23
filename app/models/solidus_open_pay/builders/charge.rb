@@ -37,7 +37,7 @@ module SolidusOpenPay
       end
 
       def email
-        @email ||= options[:email]
+        @email ||= order&.email || 'pedidos@donmanolito.com'
       end
 
       def order_id
@@ -49,7 +49,7 @@ module SolidusOpenPay
       end
 
       def phone_number
-        @phone_number ||= order&.phone
+        @phone_number ||= order&.bill_address&.phone
       end
 
       def device_session_id

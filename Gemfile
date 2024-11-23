@@ -28,6 +28,9 @@ end
 # resolve gems based on the required ruby version.
 gem 'async', '< 3' if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3')
 
+gem 'pry'
+gem 'pry-rails'
+
 gemspec
 
 # Use a local Gemfile to include development dependencies that might not be

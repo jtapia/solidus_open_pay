@@ -7,6 +7,11 @@ module SolidusOpenPay
     preference :public_key, :string
     preference :country, :string
 
+    validates :preferred_merchant_id,
+              :preferred_private_key,
+              :preferred_public_key,
+              presence: true
+
     def partial_name
       'open_pay'
     end

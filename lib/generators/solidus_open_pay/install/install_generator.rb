@@ -77,16 +77,16 @@ module SolidusOpenPay
         end
       end
 
-      # def alert_no_classic_frontend_support
-      #   support_code_for(:classic_frontend) do
-      #     message = <<~TEXT
-      #       For solidus_frontend compatibility, please use the deprecated version 0.x.
-      #       The new version of this extension only supports Solidus Starter Frontend.
-      #       No frontend code has been copied to your application.
-      #     TEXT
-      #     say_status :error, set_color(message.tr("\n", ' '), :red), :red
-      #   end
-      # end
+      def alert_no_classic_frontend_support
+        support_code_for(:classic_frontend) do
+          message = <<~TEXT
+            For solidus_frontend compatibility, please use the deprecated version 0.x.
+            The new version of this extension only supports Solidus Starter Frontend.
+            No frontend code has been copied to your application.
+          TEXT
+          say_status :error, set_color(message.tr("\n", ' '), :red), :red
+        end
+      end
 
       private
 

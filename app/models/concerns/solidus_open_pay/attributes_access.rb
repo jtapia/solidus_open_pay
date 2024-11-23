@@ -48,7 +48,7 @@ module SolidusOpenPay
 
       def expiration_year=(value)
         if value
-          self[:expiration_year] = "20 #{value}" if value.length == 2
+          self[:expiration_year] = "20#{value}" if value.length == 2
           self[:expiration_year] = value.to_i
         end
       end

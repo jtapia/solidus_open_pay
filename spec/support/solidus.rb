@@ -11,9 +11,6 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::Flash
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::Translations
-  # config.include ActiveSupport::Testing::TimeHelpers
-  # config.include Devise::Test::IntegrationHelpers, type: :feature
-  # config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
 
   config.include Rails.application.routes.url_helpers
