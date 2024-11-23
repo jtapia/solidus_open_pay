@@ -1,0 +1,177 @@
+<div class="gateway-payment-method flex flex-col gap-y-6 w-full">
+  <% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+  <%= hidden_field_tag :token_id,
+                       '',
+                       id: 'token_id',
+                       name: "payment_source[#{payment_method.id}][token_id]",
+                       'data-openpay-card': 'token_id' %>
+
+  <div class='text-input' data-hook='card_name'>
+    <%= label_tag "name_on_card_#{payment_method.id}",
+                  t('spree.name_on_card') %>
+    <%= text_field_tag "#{param_prefix}[name]",
+                       '',
+                       {
+                         id: "name_on_card_#{payment_method.id}",
+                         autocomplete: 'cc-name',
+                         class: 'cardName',
+                         placeholder: I18n.t('solidus_open_pay.form.placeholder.card_name'),
+                         'data-openpay-card': 'holder_name'
+                        } %>
+  </div>
+
+  <div class='text-input card_number' data-hook='card_number'>
+    <%= label_tag 'card_number',
+              t('spree.card_number') %>
+    <%= text_field_tag "#{param_prefix}[number]",
+                       '',
+                       {
+                         id: 'card_number',
+                         class: 'required',
+                          size: 19,
+                          maxlength: 19,
+                          autocomplete: 'cc-number',
+                          type: 'tel',
+                          placeholder: I18n.t('solidus_open_pay.form.placeholder.card_number'),
+                          'data-openpay-card': 'card_number'
+                        } %>
+
+    <span id='card_type' style='display:none;'>
+      ( <span id='looks_like' ><%= t('spree.card_type_is') %> <span id='type'></span></span>
+        <span id='unrecognized'><%= t('spree.unrecognized_card_type') %></span>
+      )
+    </span>
+  </div>
+
+  <div class='flex flex-col gap-6 sm:flex-row'>
+    <div class='text-input w-full card_expiration' data-hook='card_expiration'>
+      <%= label_tag 'card_expiry',
+                    t('spree.expiration') %>
+      <%= text_field_tag "#{param_prefix}[expiration_month]",
+                         '',
+                         id: 'card-expiry-month',
+                         class: 'w-auto required text-center',
+                         placeholder: 'MM',
+                         maxlength: 2,
+                         type: 'tel',
+                         data: { 'openpay-card': 'expiration_month' } %>
+      <span> / </span>
+      <%= text_field_tag "#{param_prefix}[expiration_year]",
+                         '',
+                         id: 'card-expiry-year',
+                         class: 'w-auto required text-center',
+                         placeholder: 'YY',
+                         maxlength: 2,
+                         type: 'tel',
+                         data: { 'openpay-card': 'expiration_year' } %>
+    </div>
+
+    <div class='text-input w-full card_code' data-hook='card_code'>
+      <%= label_tag 'card_code',
+                    t('spree.card_code') %>
+      <%= text_field_tag "#{param_prefix}[verification_value]",
+                         '',
+                         {
+                           id: 'card_code',
+                           class: 'required cardCode',
+                           size: 5,
+                           type: 'tel',
+                           autocomplete: 'off',
+                           placeholder: I18n.t('solidus_open_pay.form.placeholder.card_code'),
+                           'data-openpay-card': 'cvv2'
+                         } %>
+    </div>
+  </div>
+</div>
+
+<%# if @order.bill_address %>
+  <%#= fields_for "#{param_prefix}[address_attributes]", @order.bill_address do |f| %>
+    <%#= render partial: 'spree/address/form_hidden', locals: { form: f } %>
+  <%# end %>
+<%# end %>
+
+<%= hidden_field_tag :device_session_id,
+                     '',
+                     id: 'device-session-id',
+                     name: "payment_source[#{payment_method.id}][device_session_id]" %>
+
+<%= hidden_field_tag :cc_brand,
+                     '',
+                     id: 'cc-brand',
+                     name: "payment_source[#{payment_method.id}][brand]" %>
+
+<%= hidden_field_tag :cc_points_card,
+                     '',
+                     id: 'cc-points-card',
+                     name: "payment_source[#{payment_method.id}][points_card]" %>
+
+<%= hidden_field_tag :cc_points_type,
+                     '',
+                     id: 'cc-points-type',
+                     name: "payment_source[#{payment_method.id}][points_type]" %>
+
+<script type='text/javascript'
+        src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script type='text/javascript'
+        src='https://openpay.s3.amazonaws.com/openpay.v1.min.js'></script>
+<script type='text/javascript'
+        src='https://openpay.s3.amazonaws.com/openpay-data.v1.min.js'></script>
+
+<script type='text/javascript'>
+  $(document).ready(function() {
+    // Initialize OpenPay
+    OpenPay.setId('<%= payment_method.preferred_merchant_id %>');
+    OpenPay.setApiKey('<%= payment_method.preferred_public_key %>');
+    OpenPay.setSandboxMode('<%= payment_method.preferred_test_mode %>');
+
+    var paymentForm = document.getElementById('checkout_form_payment');
+    var submitButton = document.querySelector('.button-primary');
+
+    submitButton.addEventListener('click', function(event) {
+      event.preventDefault();
+
+      // Disable submit button
+      submitButton.disabled = true;
+
+      // Set values
+      var deviceDataId = OpenPay.deviceData.setup(
+        paymentForm,
+        'deviceIdField'
+      );
+
+      document.getElementById('device-session-id').value = deviceDataId;
+
+      OpenPay.token.extractFormAndCreate(
+        paymentForm,
+        sucess_callbak,
+        error_callbak,
+        OpenPay.getId()
+      );
+    });
+
+    var sucess_callbak = function(response) {
+      var data = response.data
+      var token_id = data.id;
+
+      document.getElementById('token_id').value = token_id;
+      document.getElementById('cc-brand').value = data.card.brand;
+      document.getElementById('cc-points-card').value = data.card.points_card;
+      document.getElementById('cc-points-type').value = data.card.points_type;
+      document.getElementById('checkout_form_payment').submit();
+    };
+
+    var error_callbak = function(response) {
+      var desc = '';
+
+      if (response.data.description != undefined) {
+        desc = response.data.description
+      } else {
+        desc = response.message;
+      };
+
+      alert('ERROR [' + response.status + '] ' + desc);
+      document.getElementById('button-primary').disabled = false;
+    };
+  })
+ </script>
