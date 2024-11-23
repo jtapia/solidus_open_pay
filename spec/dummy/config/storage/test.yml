@@ -1,3 +1,0 @@
-test:
-  service: Disk
-  root: /Users/kaifan11/Development/personal/solidus_open_pay/spec/dummy/tmp/storage
