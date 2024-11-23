@@ -6,4 +6,3 @@ set -vx
 gem install bundler --conservative
 bundle update
 bin/rake clobber
-rm -rf ./dummy-app
