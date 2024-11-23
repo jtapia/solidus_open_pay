@@ -3,13 +3,14 @@
 require 'openpay'
 require 'spec_helper'
 
+# rubocop:disable Style/HashSyntax
 RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
   let(:user) { create(:user) }
   let(:address) do
     create(:address)
   end
-  let!(:open_pay_payment_method) do
-    SolidusOpenPay::PaymentMethod.create(
+  let(:open_pay_payment_method) do
+    described_class.create(
       name: 'OpenPay',
       active: true,
       auto_capture: false,
@@ -38,7 +39,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       payment_method: open_pay_payment_method
     )
   end
-  let!(:order) do
+  let(:order) do
     create(
       :order_with_line_items,
       user: user,
@@ -46,7 +47,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       bill_address: address
     )
   end
-  let!(:payment) do
+  let(:payment) do
     order.payments.create!(
       payment_method: open_pay_payment_method,
       source: source,
@@ -116,7 +117,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
         'card' => {
           'type' => 'credit',
           'brand' => 'visa',
-          'address'=>nil,
+          'address' => nil,
           'card_number' => '424242XXXXXX4242',
           'holder_name' => 'User Test',
           'expiration_year' => '29',
@@ -164,7 +165,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
         }
       )
 
-      expect(response.success?).to be_truthy
+      expect(response).to be_success
       expect(response.class).to be(SolidusOpenPay::Response)
     end
   end
@@ -240,7 +241,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
         }
       )
 
-      expect(response.success?).to be_truthy
+      expect(response).to be_success
       expect(response.class).to be(SolidusOpenPay::Response)
     end
   end
@@ -304,8 +305,9 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
         {}
       )
 
-      expect(response.success?).to be_truthy
+      expect(response).to be_success
       expect(response.class).to be(SolidusOpenPay::Response)
     end
   end
 end
+# rubocop:enable Style/HashSyntax

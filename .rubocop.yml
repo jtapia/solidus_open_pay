@@ -57,7 +57,7 @@ Layout/EndAlignment:
 Layout/ElseAlignment:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 Layout/ClosingParenthesisIndentation:
@@ -234,4 +234,16 @@ Gemspec/DeprecatedAttributeAssignment:
   Enabled: false
 
 Layout/ArgumentAlignment:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false

@@ -10,7 +10,7 @@ module SolidusOpenPay
       @client = OpenpayApi.new(
         options.fetch(:merchant_id, nil),
         options.fetch(:private_key, nil),
-        options.fetch(:country, nil)&.presence || !options.fetch(:test_mode, nil)
+        options.fetch(:country, nil).presence || !options.fetch(:test_mode, nil)
       )
       @options = options
     end
