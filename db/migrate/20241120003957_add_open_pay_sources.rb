@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddOpenPaySources < ActiveRecord::Migration[7.1]
+class AddOpenPaySources < SolidusSupport::Migration[4.2]
   def change
     create_table :open_pay_sources do |t|
       t.integer :payment_method_id
