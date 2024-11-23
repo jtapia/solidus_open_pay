@@ -24,7 +24,7 @@ when 'mysql'
 when 'postgresql'
   gem 'pg'
 else
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.4'
 end
 
 if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3')
