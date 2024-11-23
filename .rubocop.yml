@@ -3,7 +3,7 @@ require:
 
 AllCops:
   NewCops: disable
-  TargetRubyVersion: '3.0'
+  TargetRubyVersion: 2.5
   Exclude:
     - sandbox/**/*
     - dummy-app/**/*

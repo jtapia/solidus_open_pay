@@ -22,7 +22,7 @@ module SolidusOpenPay
         self[:number] = if number_value.to_s.length <= 4
           number_value
         else
-          number_value.to_s.slice(-4..)
+          number_value.to_s.last(4)
         end
       end
 
