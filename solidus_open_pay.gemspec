@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.metadata['source_code_uri'] = 'https://github.com/jtapia/solidus_open_pay'
   s.metadata['changelog_uri'] = 'https://github.com/jtapia/solidus_open_pay/blob/master/CHANGELOG.md'
 
-  s.required_ruby_version = Gem::Requirement.new('>= 2.5')
+  s.required_ruby_version = Gem::Requirement.new('>= 2.5', '< 4'))
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
