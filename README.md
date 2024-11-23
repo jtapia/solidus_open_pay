@@ -29,7 +29,7 @@ In the provider box, choose one of the following options depending on your needs
 SolidusOpenPay::PaymentMethod
 ```
     
-### Source Methods
+## Source Methods
 
 Solidus Openpay currently supports:
 
