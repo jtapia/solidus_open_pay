@@ -15,7 +15,7 @@ bundle
 bundle exec rails g solidus_open_pay:install
 ```
 
-## Setup Openpay Payments
+## Setup OpenPay Payments
 
 You need to go to [Openpay](https://www.openpay.mx/), create an account and retrieve your ID, private and public api keys.
 
