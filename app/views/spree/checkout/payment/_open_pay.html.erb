@@ -87,12 +87,6 @@
               id: 'cvv_link' %>
 </div>
 
-<%# if @order.bill_address %>
-  <%#= fields_for "#{param_prefix}[address_attributes]", @order.bill_address do |f| %>
-    <%#= render partial: 'spree/address/form_hidden', locals: { form: f } %>
-  <%# end %>
-<%# end %>
-
 <%= hidden_field_tag :device_session_id,
                      '',
                      id: 'device-session-id',
