@@ -1,5 +1,6 @@
-Solidus Openpay
-==============
+# Solidus OpenPay
+
+[![CircleCI](https://circleci.com/gh/jtapia/solidus_open_pay.svg?style=shield)](https://circleci.com/gh/jtapia/solidus_open_pay)
 
 Add solidus_open_pay to your Gemfile:
 
