@@ -232,6 +232,82 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
     end
   end
 
+  describe '#purchase' do
+    let(:purchase_response) do
+      {
+        'id' => 'tr6jtfjrksvqe1ifqpvy',
+        'authorization' => '801585',
+        'operation_type' => 'in',
+        'transaction_type' => 'charge',
+        'status' => 'completed',
+        'conciliated' => false,
+        'creation_date' => '2024-11-26T16:26:08-06:00',
+        'operation_date' => '2024-11-26T16:26:25-06:00',
+        'description' => 'Cargo inicial',
+        'error_message' => nil,
+        'order_id' => 'R069147136-8AK5U5HC',
+        'card' =>  {
+          'type' => 'credit',
+          'brand' => 'visa',
+          'address' => nil,
+          'card_number' => '424242XXXXXX4242',
+          'holder_name' => 'User Test',
+          'expiration_year' => '29',
+          'expiration_month' => '09',
+          'allows_charges' => true,
+          'allows_payouts' => false,
+          'bank_name' => 'BANCOMER',
+          'points_type' => 'bancomer',
+          'card_business_type' => nil,
+          'dcc' => nil,
+          'points_card' => true,
+          'bank_code' => '012'
+        },
+        'amount' => 10.0,
+        'currency' => 'MXN',
+        'customer' => {
+          'name' => 'User',
+          'last_name' => 'Test',
+          'email' => 'pedidos@donmanolito.com',
+          'phone_number' => nil,
+          'address' => nil,
+          'creation_date' => '2024-11-26T16:26:08-06:00',
+          'external_id' => nil,
+          'clabe' => nil
+        },
+        'fee' => {
+          'amount' => 2.79,
+          'tax' => 0.4464,
+          'surcharge' => nil,
+          'base_commission' => nil,
+          'currency' => 'MXN'
+        },
+        'method' => 'card'
+      }
+    end
+
+    before do
+      allow_any_instance_of(OpenpayApi).to receive(:create)
+          .with(:charges) { Charges.new({}, nil, nil) }
+      allow_any_instance_of(Charges)
+          .to receive(:create) { purchase_response }
+    end
+
+    it 'sends an purchase request to open pay' do
+      response = open_pay_payment_method.purchase(
+        1000,
+        source,
+        {
+          order_id: order.number,
+          email: user.email
+        }
+      )
+
+      expect(response).to be_success
+      expect(response.class).to be(SolidusOpenPay::Response)
+    end
+  end
+
   describe '#void' do
     let(:void_response) do
       {
