@@ -3,6 +3,7 @@
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
 
+require 'openpay'
 require 'rails-controller-testing'
 
 # Run Coverage report

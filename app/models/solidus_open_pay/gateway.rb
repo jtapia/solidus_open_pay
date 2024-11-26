@@ -26,7 +26,7 @@ module SolidusOpenPay
         resource_builder.payload
       )
 
-      source.update(
+      source&.update(
         authorization_id: response.try(:[], 'id')
       )
 
@@ -45,12 +45,10 @@ module SolidusOpenPay
       json_response = JSON.parse(response.body)
       source = options[:originator].try(:source)
 
-      if source
-        source.update(
-          capture_id: json_response.try(:[], 'id'),
-          authorization_id: json_response.try(:[], 'authorization')
-        )
-      end
+      source&.update(
+        capture_id: json_response.try(:[], 'id'),
+        authorization_id: json_response.try(:[], 'authorization')
+      )
 
       SolidusOpenPay::Response.build(json_response)
     rescue ::OpenpayTransactionException,
@@ -70,7 +68,7 @@ module SolidusOpenPay
         resource_builder.payload
       )
 
-      source.update(
+      source&.update(
         capture_id: response.try(:[], 'id'),
         authorization_id: response.try(:[], 'authorization')
       )

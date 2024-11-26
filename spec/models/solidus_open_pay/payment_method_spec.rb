@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'openpay'
 require 'spec_helper'
 
 # rubocop:disable Style/HashSyntax
@@ -10,32 +9,11 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
     create(:address)
   end
   let(:open_pay_payment_method) do
-    described_class.create(
-      name: 'OpenPay',
-      active: true,
-      auto_capture: false,
-      preferences: {
-        server: 'test',
-        public_key: 'dummy_public_key',
-        private_key: 'dummy_private_key',
-        merchant_id: 'dummy_merchant_id',
-        country: '',
-        test_mode: true
-      }
-    )
+    create(:open_pay_payment_method)
   end
   let(:source) do
-    SolidusOpenPay::PaymentSource.create!(
-      name: 'User Test',
-      device_session_id: 'noycha3iERwYIJCy74Uv57fI0CsfXMU4',
-      verification_value: 'ABC123',
-      token_id: 'kecujmbb3qyejwju1z30',
-      number: '4242',
-      expiration_month: '9',
-      expiration_year: '29',
-      brand: 'visa',
-      points_card: true,
-      points_type: 'bancomer',
+    create(
+      :open_pay_payment_source,
       payment_method: open_pay_payment_method
     )
   end
@@ -246,7 +224,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
         'description' => 'Cargo inicial',
         'error_message' => nil,
         'order_id' => 'R069147136-8AK5U5HC',
-        'card' =>  {
+        'card' => {
           'type' => 'credit',
           'brand' => 'visa',
           'address' => nil,
