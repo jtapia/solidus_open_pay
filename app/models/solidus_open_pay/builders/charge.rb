@@ -17,7 +17,7 @@ module SolidusOpenPay
           'method' => 'card',
           'amount' => amount / 100,
           'currency' => 'MXN',
-          'capture' => false,
+          'capture' => capture,
           'description' => 'Cargo inicial',
           'order_id' => order_id,
           'device_session_id' => device_session_id,
@@ -38,6 +38,10 @@ module SolidusOpenPay
 
       def email
         @email ||= order&.email || 'pedidos@donmanolito.com'
+      end
+
+      def capture
+        @capture ||= options[:capture] || false
       end
 
       def order_id

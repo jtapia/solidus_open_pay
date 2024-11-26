@@ -37,12 +37,20 @@ module SolidusOpenPay
       SolidusOpenPay::Response.build(e)
     end
 
-    def capture(_amount_in_cents, authorization_id, _options = {})
+    def capture(_amount_in_cents, authorization_id, options = {})
       response = client.create(:charges).capture(
         authorization_id
       )
 
       json_response = JSON.parse(response.body)
+      source = options[:originator].try(:source)
+
+      if source
+        source.update(
+          capture_id: json_response.try(:[], 'id'),
+          authorization_id: json_response.try(:[], 'authorization')
+        )
+      end
 
       SolidusOpenPay::Response.build(json_response)
     rescue ::OpenpayTransactionException,
@@ -51,7 +59,23 @@ module SolidusOpenPay
       SolidusOpenPay::Response.build(e)
     end
 
-    def purchase(_amount_in_cents, _source, _options = {})
+    def purchase(amount_in_cents, source, options = {})
+      resource_builder = ::SolidusOpenPay::Builders::Charge.new(
+        source: source,
+        amount: amount_in_cents,
+        options: options.merge({ capture: true })
+      )
+
+      response = client.create(:charges).create(
+        resource_builder.payload
+      )
+
+      source.update(
+        capture_id: response.try(:[], 'id'),
+        authorization_id: response.try(:[], 'authorization')
+      )
+
+      SolidusOpenPay::Response.build(response)
     rescue ::OpenpayTransactionException,
            ::OpenpayException,
            ::OpenpayConnectionException => e
