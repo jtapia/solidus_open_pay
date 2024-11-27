@@ -188,25 +188,53 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       }
     end
 
-    before do
-      allow_any_instance_of(Charges)
-          .to receive(:capture) { RestClient::Response.new }
-      allow_any_instance_of(RestClient::Response)
-          .to receive(:body) { capture_response.to_json }
+    context 'with correct params' do
+      before do
+        allow_any_instance_of(Charges)
+            .to receive(:capture) { RestClient::Response.new }
+        allow_any_instance_of(RestClient::Response)
+            .to receive(:body) { capture_response.to_json }
+      end
+
+      it 'sends an capture request to open pay' do
+        response = open_pay_payment_method.capture(
+          1000,
+          'triitam7thhlqfvunpsd',
+          {
+            order_id: order.number,
+            email: user.email
+          }
+        )
+
+        expect(response).to be_success
+        expect(response.class).to be(SolidusOpenPay::Response)
+      end
     end
 
-    it 'sends an capture request to open pay' do
-      response = open_pay_payment_method.capture(
-        1000,
-        'triitam7thhlqfvunpsd',
-        {
-          order_id: order.number,
-          email: user.email
-        }
-      )
+    context 'with error' do
+      before do
+        allow_any_instance_of(Charges)
+          .to receive(:refund) {
+            raise OpenpayTransactionException.new(
+              {
+                description: 'Error',
+                http_code: '123',
+                message: 'Error',
+                error_code: '123',
+                category: ''
+              }.to_json
+            )
+          }
+      end
 
-      expect(response).to be_success
-      expect(response.class).to be(SolidusOpenPay::Response)
+      it 'returns error response' do
+        response = open_pay_payment_method.void(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).not_to be_success
+      end
     end
   end
 
@@ -264,25 +292,53 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       }
     end
 
-    before do
-      allow_any_instance_of(OpenpayApi).to receive(:create)
-          .with(:charges) { Charges.new({}, nil, nil) }
-      allow_any_instance_of(Charges)
-          .to receive(:create) { purchase_response }
+    context 'with correct params' do
+      before do
+        allow_any_instance_of(OpenpayApi).to receive(:create)
+            .with(:charges) { Charges.new({}, nil, nil) }
+        allow_any_instance_of(Charges)
+            .to receive(:create) { purchase_response }
+      end
+
+      it 'sends an purchase request to open pay' do
+        response = open_pay_payment_method.purchase(
+          1000,
+          source,
+          {
+            order_id: order.number,
+            email: user.email
+          }
+        )
+
+        expect(response).to be_success
+        expect(response.class).to be(SolidusOpenPay::Response)
+      end
     end
 
-    it 'sends an purchase request to open pay' do
-      response = open_pay_payment_method.purchase(
-        1000,
-        source,
-        {
-          order_id: order.number,
-          email: user.email
-        }
-      )
+    context 'with error' do
+      before do
+        allow_any_instance_of(Charges)
+          .to receive(:refund) {
+            raise OpenpayTransactionException.new(
+              {
+                description: 'Error',
+                http_code: '123',
+                message: 'Error',
+                error_code: '123',
+                category: ''
+              }.to_json
+            )
+          }
+      end
 
-      expect(response).to be_success
-      expect(response.class).to be(SolidusOpenPay::Response)
+      it 'returns error response' do
+        response = open_pay_payment_method.void(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).not_to be_success
+      end
     end
   end
 
@@ -334,19 +390,47 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       }
     end
 
-    before do
-      allow_any_instance_of(Charges)
-          .to receive(:refund) { void_response }
+    context 'with correct params' do
+      before do
+        allow_any_instance_of(Charges)
+            .to receive(:refund) { void_response }
+      end
+
+      it 'sends an void request to open pay' do
+        response = open_pay_payment_method.void(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).to be_success
+        expect(response.class).to be(SolidusOpenPay::Response)
+      end
     end
 
-    it 'sends an void request to open pay' do
-      response = open_pay_payment_method.void(
-        'triitam7thhlqfvunpsd',
-        {}
-      )
+    context 'with error' do
+      before do
+        allow_any_instance_of(Charges)
+          .to receive(:refund) {
+            raise OpenpayTransactionException.new(
+              {
+                description: 'Error',
+                http_code: '123',
+                message: 'Error',
+                error_code: '123',
+                category: ''
+              }.to_json
+            )
+          }
+      end
 
-      expect(response).to be_success
-      expect(response.class).to be(SolidusOpenPay::Response)
+      it 'returns error response' do
+        response = open_pay_payment_method.void(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).not_to be_success
+      end
     end
   end
 
@@ -398,19 +482,47 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       }
     end
 
-    before do
-      allow_any_instance_of(Charges)
-          .to receive(:refund) { credit_response }
+    context 'with correct params' do
+      before do
+        allow_any_instance_of(Charges)
+            .to receive(:refund) { credit_response }
+      end
+
+      it 'sends an credit request to open pay' do
+        response = open_pay_payment_method.credit(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).to be_success
+        expect(response.class).to be(SolidusOpenPay::Response)
+      end
     end
 
-    it 'sends an credit request to open pay' do
-      response = open_pay_payment_method.credit(
-        'triitam7thhlqfvunpsd',
-        {}
-      )
+    context 'with error' do
+      before do
+        allow_any_instance_of(Charges)
+          .to receive(:refund) {
+            raise OpenpayTransactionException.new(
+              {
+                description: 'Error',
+                http_code: '123',
+                message: 'Error',
+                error_code: '123',
+                category: ''
+              }.to_json
+            )
+          }
+      end
 
-      expect(response).to be_success
-      expect(response.class).to be(SolidusOpenPay::Response)
+      it 'returns error response' do
+        response = open_pay_payment_method.credit(
+          'triitam7thhlqfvunpsd',
+          {}
+        )
+
+        expect(response).not_to be_success
+      end
     end
   end
 end
