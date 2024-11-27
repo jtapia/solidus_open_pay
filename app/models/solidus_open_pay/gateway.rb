@@ -92,5 +92,7 @@ module SolidusOpenPay
            ::OpenpayConnectionException => e
       SolidusOpenPay::Response.build(e)
     end
+
+    alias_method :credit, :void
   end
 end

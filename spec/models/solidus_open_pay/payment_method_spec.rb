@@ -349,5 +349,69 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       expect(response.class).to be(SolidusOpenPay::Response)
     end
   end
+
+  describe '#credit' do
+    let(:credit_response) do
+      {
+        'id' => 'trhp1prb21hweym5zoxq',
+        'authorization' => '801585',
+        'operation_type' => 'in',
+        'transaction_type' => 'charge',
+        'status' => 'cancelled',
+        'conciliated' => true,
+        'creation_date' => '2024-11-22T22:20:28-06:00',
+        'operation_date' => '2024-11-22T22:21:05-06:00',
+        'description' => 'Cargo inicial',
+        'error_message' => nil,
+        'order_id' => 'R161167589-DBHXWAP6',
+        'card' =>
+        {
+          'type' => 'credit',
+          'brand' => 'visa',
+          'address' => nil,
+          'card_number' => '424242XXXXXX4242',
+          'holder_name' => 'User Test',
+          'expiration_year' => '29',
+          'expiration_month' => '09',
+          'allows_charges' => true,
+          'allows_payouts' => false,
+          'bank_name' => 'BANCOMER',
+          'points_type' => 'bancomer',
+          'card_business_type' => nil,
+          'dcc' => nil,
+          'points_card' => true,
+          'bank_code' => '012'
+        },
+        'customer' => {
+          'name' => 'User',
+          'last_name' => 'Test',
+          'email' => 'pedidos@donmanolito.com',
+          'phone_number' => nil,
+          'address' => nil,
+          'creation_date' => '2024-11-22T22:20:29-06:00',
+          'external_id' => nil,
+          'clabe' => nil
+        },
+        'amount' => 10.0,
+        'currency' => 'MXN',
+        'method' => 'card'
+      }
+    end
+
+    before do
+      allow_any_instance_of(Charges)
+          .to receive(:refund) { credit_response }
+    end
+
+    it 'sends an credit request to open pay' do
+      response = open_pay_payment_method.credit(
+        'triitam7thhlqfvunpsd',
+        {}
+      )
+
+      expect(response).to be_success
+      expect(response.class).to be(SolidusOpenPay::Response)
+    end
+  end
 end
 # rubocop:enable Style/HashSyntax
