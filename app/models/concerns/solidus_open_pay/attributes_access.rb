@@ -5,13 +5,23 @@ module SolidusOpenPay
     extend ActiveSupport::Concern
 
     included do
-      attr_accessor :token_id,
-                    :brand,
+      attr_accessor :brand,
+                    :device_session_id,
+                    :expiration_month,
+                    :expiration_year,
                     :number,
+                    :token_id,
                     :verification_value,
                     :points_card,
-                    :points_type,
-                    :device_session_id
+                    :points_type
+
+      def brand=(value)
+        self[:brand] = value.to_s.gsub(/\s/, '')
+      end
+
+      def device_session_id=(value)
+        self[:device_session_id] = value.to_s.gsub(/\s/, '')
+      end
 
       def number=(value)
         number_value =
@@ -28,10 +38,6 @@ module SolidusOpenPay
 
       def token_id=(value)
         self[:token_id] = value.to_s.gsub(/\s/, '')
-      end
-
-      def brand=(value)
-        self[:brand] = value.to_s.gsub(/\s/, '')
       end
 
       def points_card=(value)
@@ -53,8 +59,12 @@ module SolidusOpenPay
         end
       end
 
-      def device_session_id=(value)
-        self[:device_session_id] = value.to_s.gsub(/\s/, '')
+      def brand
+        self[:brand]
+      end
+
+      def device_session_id
+        self[:device_session_id]
       end
 
       def number
@@ -65,16 +75,6 @@ module SolidusOpenPay
         self[:token_id]
       end
 
-      def brand
-        self[:brand]
-      end
-
-      def device_session_id
-        self[:device_session_id]
-      end
-
-      # @return [String] the card number, with all but last 4 numbers replace
-      #   with "X", as in "XXXX-XXXX-XXXX-4338"
       def display_number
         "XXXX-XXXX-XXXX-#{number}"
       end
