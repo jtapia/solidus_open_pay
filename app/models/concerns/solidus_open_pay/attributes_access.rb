@@ -13,7 +13,8 @@ module SolidusOpenPay
                     :token_id,
                     :verification_value,
                     :points_card,
-                    :points_type
+                    :points_type,
+                    :redirect_url
 
       def brand=(value)
         self[:brand] = value.to_s.gsub(/\s/, '')
@@ -59,6 +60,10 @@ module SolidusOpenPay
         end
       end
 
+      def redirect_url=(value)
+        self[:redirect_url] = value
+      end
+
       def brand
         self[:brand]
       end
@@ -73,6 +78,10 @@ module SolidusOpenPay
 
       def token_id
         self[:token_id]
+      end
+
+      def redirect_url
+        self[:redirect_url]
       end
 
       def display_number

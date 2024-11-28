@@ -19,7 +19,7 @@ module SolidusOpenPay
       resource_builder = ::SolidusOpenPay::Builders::Charge.new(
         source: source,
         amount: amount_in_cents,
-        options: options
+        options: options.merge({ capture: true })
       )
 
       response = client.create(:charges).create(
@@ -27,7 +27,8 @@ module SolidusOpenPay
       )
 
       source&.update(
-        authorization_id: response.try(:[], 'id')
+        authorization_id: response.try(:[], 'id'),
+        redirect_url: response.try(:[], 'payment_method').try(:[], 'url')
       )
 
       SolidusOpenPay::Response.build(response)
@@ -70,7 +71,8 @@ module SolidusOpenPay
 
       source&.update(
         capture_id: response.try(:[], 'id'),
-        authorization_id: response.try(:[], 'authorization')
+        authorization_id: response.try(:[], 'authorization'),
+        redirect_url: response.try(:[], 'payment_method').try(:[], 'url')
       )
 
       SolidusOpenPay::Response.build(response)

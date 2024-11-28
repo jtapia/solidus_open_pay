@@ -21,6 +21,8 @@ module SolidusOpenPay
           'description' => 'Cargo inicial',
           'order_id' => order_id,
           'device_session_id' => device_session_id,
+          'use_3d_secure' => true,
+          'redirect_url' => redirect_url,
           'customer' => {
             'name' => first_name,
             'last_name' => last_name,
@@ -49,7 +51,7 @@ module SolidusOpenPay
       end
 
       def order
-        @order ||= Spree::Order.find_by(number: order_id.split[0])
+        @order ||= ::Spree::Order.find_by(number: order_id.split('-')[0])
       end
 
       def phone_number
@@ -66,6 +68,14 @@ module SolidusOpenPay
 
       def last_name
         @last_name ||= source.name.split[1]
+      end
+
+      def redirect_url
+        @redirect_url ||= [
+          order.store.url,
+          'orders',
+          order.number
+        ].join('/')
       end
     end
   end

@@ -13,6 +13,7 @@ FactoryBot.define do
         private_key: SecureRandom.hex(10),
         merchant_id: SecureRandom.hex(8),
         country: '',
+        redirect_url: '',
         test_mode: true
       }
     }
