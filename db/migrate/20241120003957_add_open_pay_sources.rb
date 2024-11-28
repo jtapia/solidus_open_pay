@@ -16,6 +16,7 @@ class AddOpenPaySources < SolidusSupport::Migration[4.2]
       t.string :brand
       t.boolean :points_card, default: false
       t.string :points_type
+      t.string :redirect_url
 
       t.timestamps
     end
