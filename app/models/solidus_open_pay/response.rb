@@ -36,13 +36,13 @@ module SolidusOpenPay
 
         new(
           false,
-          error_message(response),
+          error_message,
           response,
           {}
         )
       end
 
-      def error_message(result)
+      def error_message
         I18n.t('solidus_open_pay.transaction.error')
       end
     end
