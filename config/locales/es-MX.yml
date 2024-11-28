@@ -38,6 +38,8 @@ es-MX:
       3010: El banco ha restringido la tarjeta
       3011: El banco ha solicitado que se retenga la tarjeta
       3012: Se requiere autorización del banco para este cargo
+    transaction:
+      error: Hubo un error, por favor intenta de nuevo.
   activerecord:
     models:
       solidus_open_pay/payment_source: Solidus OpenPay Fuente de Pago

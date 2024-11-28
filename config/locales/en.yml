@@ -38,6 +38,8 @@ en:
       3010: The bank has restricted the card
       3011: The bank has requested the card to be retained
       3012: Bank authorization is required for this charge
+    transaction:
+      error: Something went wrong, please try again.
   activerecord:
     models:
       solidus_open_pay/payment_source: Solidus OpenPay Payment Source
