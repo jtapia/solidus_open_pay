@@ -36,14 +36,26 @@ module SolidusOpenPay
 
         new(
           false,
-          error_message,
+          I18n.t('solidus_open_pay.transaction.error'),
           response,
           {}
         )
       end
 
-      def error_message
-        I18n.t('solidus_open_pay.transaction.error')
+      def error_message(result)
+        error_message = transaction_error_message(result['error_code'])
+        [
+          error_message.to_s,
+          "(#{result['error_code']})"
+        ].join(' ')
+      end
+
+      def transaction_error_message(error_code)
+        I18n.t(
+          error_code,
+          scope: 'solidus_open_pay.gateway_rejection_reasons',
+          default: 'Error'
+        )
       end
     end
   end
