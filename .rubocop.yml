@@ -247,3 +247,6 @@ RSpec/MultipleExpectations:
 
 RSpec/NestedGroups:
   Enabled: false
+
+RSpec/PredicateMatcher:
+  Enabled: false
