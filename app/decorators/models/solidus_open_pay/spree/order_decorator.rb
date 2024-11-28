@@ -21,7 +21,7 @@ module SolidusOpenPay
         current_open_pay_payment&.source&.redirect_url
       end
 
-      ::Spree::Order.prepend self
+      ::Spree::Order.prepend(self)
     end
   end
 end
