@@ -138,7 +138,7 @@
       event.preventDefault();
 
       // Disable submit button
-      document.getElementById('pay-button').disabled = true;
+      submitButton.setAttribute('disabled', true);
 
       // Set values
       var deviceDataId = OpenPay.deviceData.setup(
@@ -148,12 +148,17 @@
 
       document.getElementById('device-session-id').value = deviceDataId;
 
-      OpenPay.token.extractFormAndCreate(
-        paymentForm,
-        sucess_callbak,
-        error_callbak,
-        OpenPay.getId()
-      );
+      try {
+        OpenPay.token.extractFormAndCreate(
+          paymentForm,
+          sucess_callbak,
+          error_callbak,
+          OpenPay.getId()
+        )
+      } catch(error) {
+        console.log(error);
+        submitButton.removeAttribute('disabled');
+      }
     });
 
     var sucess_callbak = function(response) {
@@ -177,7 +182,7 @@
       };
 
       alert('ERROR [' + response.status + '] ' + desc);
-      document.getElementById('pay-button').disabled = false;
+      submitButton.removeAttribute('disabled');
     };
   })
  </script>
