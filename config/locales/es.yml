@@ -39,7 +39,7 @@ es:
       3011: El banco ha solicitado que se retenga la tarjeta
       3012: Se requiere autorización del banco para este cargo
     transaction:
-      error: Hubo un error procesando la tarjeta, por favor contactar a su banco.
+      error: Hubo un error procesando la tarjeta, intenta de nuevo y contactar a su banco si el problema persiste.
   activerecord:
     models:
       solidus_open_pay/payment_source: Solidus OpenPay Fuente de Pago
