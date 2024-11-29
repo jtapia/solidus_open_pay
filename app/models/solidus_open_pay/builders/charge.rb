@@ -71,11 +71,7 @@ module SolidusOpenPay
       end
 
       def redirect_url
-        @redirect_url ||= [
-          order.store.url,
-          'orders',
-          order.number
-        ].join('/')
+        @redirect_url ||= "#{order.store.url}/checkout/confirm"
       end
     end
   end

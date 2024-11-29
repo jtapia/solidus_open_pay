@@ -5,7 +5,8 @@ module SolidusOpenPay
     module OrderDecorator
       def open_pay_payments
         payments.valid.where(
-          source_type: 'SolidusOpenPay::PaymentSource'
+          source_type: 'SolidusOpenPay::PaymentSource',
+          state: 'checkout'
         )
       end
 
