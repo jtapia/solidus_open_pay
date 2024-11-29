@@ -39,7 +39,7 @@ en:
       3011: The bank has requested the card to be retained
       3012: Bank authorization is required for this charge
     transaction:
-      error: Something went wrong, please try again.
+      error: There was an error processing the card, please contact your bank.
   activerecord:
     models:
       solidus_open_pay/payment_source: Solidus OpenPay Payment Source
