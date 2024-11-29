@@ -4,6 +4,7 @@ class RenameNumberColumnToOpenPaySources < SolidusSupport::Migration[4.2]
   disable_ddl_transaction!
 
   def change
-    rename_column :open_pay_sources, :number, :card_number
+    add_column :open_pay_sources, :card_number, :string
+    remove_column :open_pay_sources, :number, :string
   end
 end
