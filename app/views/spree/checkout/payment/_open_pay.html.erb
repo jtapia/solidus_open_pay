@@ -173,7 +173,6 @@
       document.getElementById('cc-points-type').value = data.card.points_type;
 
       // Set necessary data values
-      var requestData = response.data.card;
       requestData['token_id'] = token_id;
       requestData['card_type'] = response.data.card.type;
       requestData['payment_method_id'] = '#{payment_method.id}';
