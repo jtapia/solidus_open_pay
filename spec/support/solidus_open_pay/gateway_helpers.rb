@@ -10,7 +10,8 @@ module SolidusOpenPay
           public_key: 'dummy_public_key',
           private_key: 'dummy_private_key',
           merchant_id: 'dummy_merchant_id',
-          country: nil,
+          country: '',
+          redirect_url: '',
           test_mode: true
         }
       }.merge(opts))

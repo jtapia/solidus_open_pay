@@ -7,20 +7,17 @@ module SolidusOpenPay
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
 
-    isolate_namespace ::Spree
+    isolate_namespace SolidusOpenPay
     engine_name 'solidus_open_pay'
 
     initializer 'spree.gateway.payment_methods', after: 'spree.register.payment_methods' do |app|
       app.config.spree.payment_methods << 'SolidusOpenPay::PaymentMethod'
 
       Spree::PermittedAttributes.source_attributes.push(
-        :address_attributes,
-        :cc_type,
-        :number,
-        :name,
-        :verification_value,
+        :card_number,
+        :holder_name,
         :token_id,
-        :type,
+        :card_type,
         :brand,
         :points_card,
         :points_type,
