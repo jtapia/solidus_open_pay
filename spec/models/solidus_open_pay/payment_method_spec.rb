@@ -318,7 +318,7 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
     context 'with error' do
       before do
         allow_any_instance_of(Charges)
-          .to receive(:refund) {
+          .to receive(:create) {
             raise OpenpayTransactionException.new(
               {
                 description: 'Error',
@@ -332,9 +332,13 @@ RSpec.describe SolidusOpenPay::PaymentMethod, type: :model do
       end
 
       it 'returns error response' do
-        response = open_pay_payment_method.void(
-          'triitam7thhlqfvunpsd',
-          {}
+        response = open_pay_payment_method.purchase(
+          1000,
+          source,
+          {
+            order_id: order.number,
+            email: user.email
+          }
         )
 
         expect(response).not_to be_success

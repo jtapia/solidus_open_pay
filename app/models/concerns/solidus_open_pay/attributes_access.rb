@@ -15,8 +15,7 @@ module SolidusOpenPay
                     :points_card,
                     :points_type,
                     :redirect_url,
-                    :token_id,
-                    :verification_value
+                    :token_id
 
       alias_attribute :name, :holder_name
       alias_attribute :number, :card_number

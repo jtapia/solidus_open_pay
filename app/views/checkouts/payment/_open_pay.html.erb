@@ -119,8 +119,9 @@
     OpenPay.setApiKey('<%= payment_method.preferred_public_key %>');
     OpenPay.setSandboxMode('<%= payment_method.preferred_test_mode %>');
 
-    var paymentForm = document.getElementById('checkout_form_payment');
+    var secure3D = '<%= payment_method.preferred_secure_3d %>';
     var submitButton = document.querySelector('.button-primary');
+    var paymentForm = document.getElementById('checkout_form_payment');
 
     submitButton.addEventListener('click', function(event) {
       event.preventDefault();
@@ -151,20 +152,45 @@
 
     var sucess_callbak = function(response) {
       var data = response.data
-      var token_id = data.id;
-      var requestData = response.data.card;
+      var tokenID = data.id;
+      var deviceSessionID = document.getElementById(
+        'device-session-id'
+      ).value;
 
       // Set response data values
-      document.getElementById('token_id').value = token_id;
+      document.getElementById('token_id').value = tokenID;
       document.getElementById('cc-brand').value = data.card.brand;
       document.getElementById('cc-points-card').value = data.card.points_card;
       document.getElementById('cc-points-type').value = data.card.points_type;
 
+      if (secure3D) {
+        requestWith3DS(tokenID, deviceSessionID, data);
+      } else {
+        paymentForm.submit()
+      }
+    };
+
+    var error_callbak = function(response) {
+      var desc = '';
+
+      if (response.data.description != undefined) {
+        desc = response.data.description
+      } else {
+        desc = response.message;
+      };
+
+      alert('ERROR [' + response.status + '] ' + desc);
+      submitButton.removeAttribute('disabled');
+    };
+
+    var requestWith3DS = function(tokenID, deviceSessionID, data) {
+      var requestData = data.card;
+
       // Set necessary data values
-      requestData['token_id'] = token_id;
-      requestData['card_type'] = response.data.card.type;
+      requestData['token_id'] = tokenID;
+      requestData['card_type'] = data.card.type;
       requestData['payment_method_id'] = '#{payment_method.id}';
-      requestData['device_session_id'] = deviceSessionId;
+      requestData['device_session_id'] = deviceSessionID;
 
       // Remove unnecessary data values
       delete(requestData['type']);
@@ -192,18 +218,5 @@
           })
       })
     };
-
-    var error_callbak = function(response) {
-      var desc = '';
-
-      if (response.data.description != undefined) {
-        desc = response.data.description
-      } else {
-        desc = response.message;
-      };
-
-      alert('ERROR [' + response.status + '] ' + desc);
-      submitButton.removeAttribute('disabled');
-    };
-  })
- </script>
+  });
+</script>
