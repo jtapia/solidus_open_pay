@@ -165,18 +165,19 @@
     var sucess_callbak = function(response) {
       var data = response.data
       var tokenID = data.id;
+      var cardData = data.card;
       var deviceSessionID = document.getElementById(
         'device-session-id'
       ).value;
 
       // Set response data values
       document.getElementById('token_id').value = tokenID;
-      document.getElementById('cc-brand').value = data.card.brand;
-      document.getElementById('cc-points-card').value = data.card.points_card;
-      document.getElementById('cc-points-type').value = data.card.points_type;
+      document.getElementById('cc-brand').value = cardData.brand;
+      document.getElementById('cc-points-card').value = cardData.points_card;
+      document.getElementById('cc-points-type').value = cardData.points_type;
 
       if (secure3D) {
-        requestWith3DS(tokenID, deviceSessionID, data);
+        requestWith3DS(tokenID, deviceSessionID, cardData);
       } else {
         paymentForm.submit()
       }
@@ -195,12 +196,11 @@
       submitButton.removeAttribute('disabled');
     };
 
-    var requestWith3DS = function(tokenID, deviceSessionID, data) {
-      var requestData = data.card;
-
+    var requestWith3DS = function(tokenID, deviceSessionID, cardData) {
       // Set necessary data values
+      var requestData = cardData;
       requestData['token_id'] = tokenID;
-      requestData['card_type'] = data.card.type;
+      requestData['card_type'] = cardData.type;
       requestData['payment_method_id'] = '#{payment_method.id}';
       requestData['device_session_id'] = deviceSessionID;
 

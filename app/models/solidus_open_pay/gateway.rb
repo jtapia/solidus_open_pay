@@ -19,7 +19,7 @@ module SolidusOpenPay
       resource_builder = ::SolidusOpenPay::Builders::Charge.new(
         source: source,
         amount: amount_in_cents,
-        options: options.merge({ capture: true })
+        options: options
       )
 
       response = client.create(:charges).create(
