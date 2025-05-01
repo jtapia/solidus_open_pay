@@ -1,0 +1,21 @@
+<fieldset data-hook='credit_card'>
+  <legend align='center'><%= I18n.t('spree.credit_card') %></legend>
+
+  <div class='row'>
+    <div class='alpha six columns'>
+      <dl>
+        <dt><%= I18n.t('solidus_open_pay.admin.card.brand') %>:</dt>
+        <dd><%= payment.source.brand.capitalize %></dd>
+
+        <dt><%= I18n.t('solidus_open_pay.admin.card.card_number') %>:</dt>
+        <dd><%= payment.source.display_number %></dd>
+
+        <dt><%= I18n.t('solidus_open_pay.admin.card.token_id') %>:</dt>
+        <dd><%= payment.source.token_id %></dd>
+
+        <dt><%= I18n.t('solidus_open_pay.admin.card.device_session_id') %>:</dt>
+        <dd><%= payment.source.device_session_id %></dd>
+      </dl>
+    </div>
+  </div>
+</fieldset>
