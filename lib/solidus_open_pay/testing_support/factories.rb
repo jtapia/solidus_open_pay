@@ -13,6 +13,7 @@ FactoryBot.define do
         private_key: SecureRandom.hex(10),
         merchant_id: SecureRandom.hex(8),
         country: '',
+        redirect_url: '',
         test_mode: true
       }
     }
@@ -21,7 +22,6 @@ FactoryBot.define do
   factory :open_pay_payment_source, class: 'SolidusOpenPay::PaymentSource' do
     name { 'User Test' }
     device_session_id { 'noycha3iERwYIJCy74Uv57fI0CsfXMU4' }
-    verification_value { 'ABC123' }
     token_id { SecureRandom.hex(10) }
     number { '4242' }
     expiration_month { '9' }

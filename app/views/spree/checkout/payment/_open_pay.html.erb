@@ -131,8 +131,9 @@
     OpenPay.setApiKey('<%= payment_method.preferred_public_key %>');
     OpenPay.setSandboxMode('<%= payment_method.preferred_test_mode %>');
 
+    var secure3D = '<%= payment_method.preferred_secure_3d %>';
+    var submitButton = document.querySelector('.button-primary');
     var paymentForm = document.getElementById('checkout_form_payment');
-    var submitButton = document.getElementById('pay-button');
 
     submitButton.addEventListener('click', function(event) {
       event.preventDefault();
@@ -163,13 +164,23 @@
 
     var sucess_callbak = function(response) {
       var data = response.data
-      var token_id = data.id;
+      var tokenID = data.id;
+      var cardData = data.card;
+      var deviceSessionID = document.getElementById(
+        'device-session-id'
+      ).value;
 
-      document.getElementById('token_id').value = token_id;
-      document.getElementById('cc-brand').value = data.card.brand;
-      document.getElementById('cc-points-card').value = data.card.points_card;
-      document.getElementById('cc-points-type').value = data.card.points_type;
-      document.getElementById('checkout_form_payment').submit();
+      // Set response data values
+      document.getElementById('token_id').value = tokenID;
+      document.getElementById('cc-brand').value = cardData.brand;
+      document.getElementById('cc-points-card').value = cardData.points_card;
+      document.getElementById('cc-points-type').value = cardData.points_type;
+
+      if (secure3D) {
+        requestWith3DS(tokenID, deviceSessionID, cardData);
+      } else {
+        paymentForm.submit()
+      }
     };
 
     var error_callbak = function(response) {
@@ -184,5 +195,40 @@
       alert('ERROR [' + response.status + '] ' + desc);
       submitButton.removeAttribute('disabled');
     };
-  })
- </script>
+
+    var requestWith3DS = function(tokenID, deviceSessionID, cardData) {
+      // Set necessary data values
+      var requestData = cardData;
+      requestData['token_id'] = tokenID;
+      requestData['card_type'] = cardData.type;
+      requestData['payment_method_id'] = '#{payment_method.id}';
+      requestData['device_session_id'] = deviceSessionID;
+
+      // Remove unnecessary data values
+      delete(requestData['type']);
+      delete(requestData['address']);
+      delete(requestData['creation_date']);
+
+      fetch(
+        '/solidus_open_pay/payments',
+        {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            payment: requestData
+          })
+        }
+      ).then(response => {
+        response.text()
+          .then(result => {
+            parsedResult = JSON.parse(result);
+
+            window.location = parsedResult.redirect_url
+          })
+      })
+    }
+  });
+</script>

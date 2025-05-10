@@ -6,6 +6,8 @@ module SolidusOpenPay
     preference :private_key, :string
     preference :public_key, :string
     preference :country, :string
+    preference :secure_3d, :boolean
+    preference :redirect_url, :string, default: '/checkout/confirm'
 
     def partial_name
       'open_pay'
